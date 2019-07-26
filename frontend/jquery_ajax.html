@@ -7,7 +7,7 @@
         $(document).ready(function () {
             $("button").click(function () {
                 $.ajax({
-                    url: "http://localhost:3000/users", success: function (result) {
+                    url: "http://localhost:3000/sequilize", success: function (result) {
                         $("#div1").html(JSON.stringify(result));
                         console.log(result);
                     }
@@ -18,14 +18,14 @@
 </head>
 
 <body>
-    <form action="http://localhost:3000/users" method="post">
+    <form action="http://localhost:3000/sequilize" method="post">
         First name:<br>
-        <input type="text" name="firstname" value="Mickey">
+        <input type="text" name="firstname">
         <br>
         Last name:<br>
-        <input type="text" name="lastname" value="Mouse">
+        <input type="text" name="lastname">
         <br><br>
-        <input type="submit" value="Submit">
+        <input type="submit">
     </form>
 
     <div id="div1">
