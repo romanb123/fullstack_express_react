@@ -23,6 +23,10 @@ const User = sequelize.define('users', {
   username: Sequelize.STRING,
   lastname: Sequelize.STRING
 });
+User.sync().then(() => {
+  console.log('New table created');
+});
+
 
 router.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -32,20 +36,18 @@ router.use(function (req, res, next) {
 
 /* GET users listing. */
 router.get("/", function (req, res) {
-  sequelize
-    .query('SELECT * FROM users')
-    .then(projects => {
-      // Each record will now be mapped to the project's model.
-      console.log(typeof projects);
-      res.send(projects)
-    })
+  // Each record will now be mapped to the project's model.
+  User.findAll().then(projects => {
+    res.send(projects);
+  })
+
+
 });
 router.post('/', function (req, res) {
-  sequelize.sync()
-    .then(() => User.create({
-      username: req.body.firstname,
-      lastname: req.body.firstname
-    }))
+  User.create({
+    username: req.body.firstname,
+    lastname: req.body.lastname
+  })
     .then(() => {
       res.send("got");
     });
