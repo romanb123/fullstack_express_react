@@ -19,13 +19,24 @@ const sequelize = new Sequelize('node-app', 'root', 'qwert%$#@!', {
   // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
   operatorsAliases: false
 });
-const User = sequelize.define('users', {
+
+
+class User extends Sequelize.Model { }
+User.init({
   username: Sequelize.STRING,
-  lastname: Sequelize.STRING
-});
+  lastname: Sequelize.STRING,
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+}, { sequelize, modelName: 'users' });
+
 User.sync().then(() => {
   console.log('New table created');
 });
+
+
 
 
 router.use(function (req, res, next) {
