@@ -3,10 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const sequelize = require('./database/sequilize');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var sequilize = require('./routes/sequilize');
+var postsRouter = require('./routes/posts');
 
 var app = express();
 
@@ -20,9 +21,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+postsRouter.Posts.belongsTo(usersRouter.user);
+sequelize.sync().then(() => {
+  console.log('New table created');
+});
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/sequilize', sequilize);
+app.use('/users', usersRouter.router);
+app.use('/posts', postsRouter.router);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

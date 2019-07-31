@@ -4,17 +4,16 @@ var mysql = require('mysql2');
 const Sequelize = require('sequelize');
 const sequelize = require('../database/sequilize');
 
-
-class User extends Sequelize.Model { }
-User.init({
-  username: Sequelize.STRING,
-  lastname: Sequelize.STRING,
+class Posts extends Sequelize.Model { }
+Posts.init({
+  postname: Sequelize.STRING,
+  postbody: Sequelize.STRING,
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true
   },
-}, { sequelize, modelName: 'users' });
+}, { sequelize, modelName: 'posts' });
 
 
 
@@ -30,20 +29,26 @@ router.use(function (req, res, next) {
 /* GET users listing. */
 router.get("/", function (req, res) {
   // Each record will now be mapped to the project's model.
-  User.findAll().then(projects => {
-    res.send(projects);
-  })
-
+  sequelize.sync()
+    .then(() => Posts.create({
+      postname: "Sequelize.STRING",
+      postbody: "Sequelize.STRING",
+    }))
+    .then(jane => {
+      console.log(jane.toJSON());
+    });
 
 });
 router.post('/', function (req, res) {
-  User.create({
-    username: req.body.firstname,
-    lastname: req.body.lastname
+  Posts.create({
+    postname: "eer",
+    postbody: "eeteetteeeeee",
   })
     .then(() => {
       res.send("got");
     });
 });
 exports.router = router;
-exports.user = User;
+exports.Posts = Posts;
+
+
