@@ -3,6 +3,7 @@ var router = express.Router();
 var mysql = require('mysql2');
 const Sequelize = require('sequelize');
 const sequelize = require('../database/sequilize');
+const User = require('./users');
 
 class Posts extends Sequelize.Model { }
 Posts.init({
