@@ -15,12 +15,6 @@ User.init({
     primaryKey: true
   },
 }, { sequelize, modelName: 'users' });
-
-
-
-
-
-
 router.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -47,3 +41,4 @@ router.post('/', function (req, res) {
 });
 exports.router = router;
 exports.user = User;
+
