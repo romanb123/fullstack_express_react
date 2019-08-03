@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const sequelize = require('./database/sequilize');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -23,14 +23,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-postsRouter.Posts.belongsTo(usersRouter.user);
-usersRouter.user.hasMany(postsRouter.Posts);
-sequelize.sync().then(() => {
-  console.log('New table created');
-});
 app.use('/', indexRouter);
-app.use('/users', usersRouter.router);
-app.use('/posts', postsRouter.router);
+app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

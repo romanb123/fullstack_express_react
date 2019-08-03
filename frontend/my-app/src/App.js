@@ -1,5 +1,4 @@
 import React from 'react';
-import Send from './senddata';
 
 
 class App extends React.Component {
@@ -33,14 +32,25 @@ class App extends React.Component {
       )
   }
 
-  
+
 
   render() {
-    console.log(this.state);
- return(
-   <div>"yy"<Send/></div>
- )
+    const { error, isLoaded, items } = this.state;
+    if (error) {
+      return <div>Ошибка: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div>Загрузка...</div>;
+    } else {
+      return (
+        <ul>
+          {items.map(item => (
+            <li key={item.id}>
+              {item.username} {item.lastname}
+            </li>
+          ))}
+        </ul>
+      );
+    }
   }
 }
-
 export default App;
